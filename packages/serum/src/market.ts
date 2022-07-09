@@ -1483,6 +1483,14 @@ export class Market {
     return native.div(this._decoded.baseLotSize);
   }
 
+  baseSizeNumberToNativeLots(size: number): BN {
+    const native = new BN(
+      Math.round(size * Math.pow(10, this._baseSplTokenDecimals)),
+    );
+    // rounds down to the nearest lot size
+    return native.div(this._decoded.baseLotSize).mul(this._decoded.baseLotSize);
+  }
+
   quoteSizeLotsToNumber(size: BN) {
     return divideBnToNumber(
       size.mul(this._decoded.quoteLotSize),
